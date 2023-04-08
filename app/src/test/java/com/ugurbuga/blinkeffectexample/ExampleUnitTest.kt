@@ -1,4 +1,4 @@
-package com.learn.blinkeffectexample
+package com.ugurbuga.testlibapp
 
 import org.junit.Test
 

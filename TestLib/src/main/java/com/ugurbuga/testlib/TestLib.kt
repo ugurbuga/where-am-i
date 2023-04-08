@@ -1,4 +1,4 @@
-package com.learn.blinklibrary
+package com.ugurbuga.testlib
 
 import android.animation.ArgbEvaluator
 import android.animation.ObjectAnimator
@@ -6,7 +6,7 @@ import android.graphics.Color
 import android.view.View
 import android.view.animation.Animation
 
-object BlinkEffect {
+object TestLib {
 
     fun blink(view: View) {
         // adding the color to be shown

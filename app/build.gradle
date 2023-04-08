@@ -8,7 +8,7 @@ android {
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId "com.learn.blinkeffectexample"
+        applicationId "com.ugurbuga.testlibapp"
         minSdkVersion 19
         targetSdkVersion 30
         versionCode 1

@@ -1,4 +1,4 @@
-package com.learn.blinklibrary
+package com.ugurbuga.testlib
 
 import org.junit.Test
 

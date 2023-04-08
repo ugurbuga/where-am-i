@@ -1,4 +1,4 @@
-package com.learn.blinklibrary
+package com.ugurbuga.testlib
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

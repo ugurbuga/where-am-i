@@ -1,4 +1,4 @@
-package com.learn.blinkeffectexample
+package com.ugurbuga.testlibapp
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
