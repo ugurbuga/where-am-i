@@ -1,4 +1,4 @@
-package com.ugurbuga.testlibapp
+package com.ugurbuga.whereamiapp
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
