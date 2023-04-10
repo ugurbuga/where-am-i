@@ -39,6 +39,9 @@ internal object Logger {
 
     private val ignoreList = arrayListOf(GLIDE_MANAGER, SUPPORT_LIFECYCLE_FRAGMENT_IMPL)
 
+    //private fun Activity.name(): String = "(${this.javaClass.simpleName}.kt:0)"
+    //private fun Fragment.name(): String = "(${this.javaClass.simpleName}.kt:0)"
+
     private fun Activity.name(): String = this.javaClass.simpleName
 
     private fun Fragment.name(): String = this.javaClass.simpleName
