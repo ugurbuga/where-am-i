@@ -1,6 +1,7 @@
 package com.ugurbuga.whereami
 
 import android.app.Activity
+import android.os.Build
 import android.util.Log
 import androidx.fragment.app.Fragment
 
@@ -13,7 +14,7 @@ internal object Logger {
     fun logActivity(activity: Activity, logEnabled: Boolean) {
         if (activity.toString() != lastActivity) {
             lastActivity = activity.toString()
-            val activityName = activity.name()
+            val activityName = activity.formattedName()
             if (logEnabled) {
                 Log.d(WHERE_AM_I, activityName)
             }
@@ -26,7 +27,8 @@ internal object Logger {
             !fragment.toString().startsWith(NAV_HOST_FRAGMENT)
         ) {
             lastFragment = fragment.toString()
-            val activityFragmentName = activity.name().plus(" - ").plus(fragment.name())
+            val activityFragmentName =
+                activity.formattedName().plus(" - ").plus(fragment.formattedName())
             if (logEnabled) {
                 Log.d(WHERE_AM_I, activityFragmentName)
             }
@@ -39,11 +41,30 @@ internal object Logger {
 
     private val ignoreList = arrayListOf(GLIDE_MANAGER, SUPPORT_LIFECYCLE_FRAGMENT_IMPL)
 
-    //private fun Activity.name(): String = "(${this.javaClass.simpleName}.kt:0)"
-    //private fun Fragment.name(): String = "(${this.javaClass.simpleName}.kt:0)"
-
     private fun Activity.name(): String = this.javaClass.simpleName
+    private fun Activity.formattedName(): String {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            if (this.javaClass.getDeclaredAnnotation(Metadata::class.java) != null) {
+                "(" + name() + ".kt:1)"
+            } else {
+                "(" + name() + ".java:1)"
+            }
+        } else {
+            name()
+        }
+    }
 
     private fun Fragment.name(): String = this.javaClass.simpleName
+    private fun Fragment.formattedName(): String {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            if (this.javaClass.getDeclaredAnnotation(Metadata::class.java) != null) {
+                "(" + name() + ".kt:1)"
+            } else {
+                "(" + name() + ".java:1)"
+            }
+        } else {
+            name()
+        }
+    }
 
 }
