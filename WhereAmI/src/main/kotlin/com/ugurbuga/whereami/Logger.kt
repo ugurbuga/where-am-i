@@ -36,15 +36,17 @@ internal object Logger {
     }
 
     private const val NAV_HOST_FRAGMENT = "NavHostFragment"
+    private const val SUPPORT_MAP_FRAGMENT = "SupportMapFragment"
     private const val GLIDE_MANAGER = "com.bumptech.glide.manager"
     private const val SUPPORT_LIFECYCLE_FRAGMENT_IMPL = "SupportLifecycleFragmentImpl"
 
-    private val ignoreList = arrayListOf(GLIDE_MANAGER, SUPPORT_LIFECYCLE_FRAGMENT_IMPL)
+    private val ignoreList =
+        arrayListOf(GLIDE_MANAGER, SUPPORT_LIFECYCLE_FRAGMENT_IMPL, SUPPORT_MAP_FRAGMENT)
 
     private fun Activity.name(): String = this.javaClass.simpleName
     private fun Activity.formattedName(): String {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            if (this.javaClass.getDeclaredAnnotation(Metadata::class.java) != null) {
+            if (this.javaClass.getDeclaredAnnotation(kotlin.Metadata::class.java) != null) {
                 "(" + name() + ".kt:1)"
             } else {
                 "(" + name() + ".java:1)"
