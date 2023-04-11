@@ -28,7 +28,7 @@ internal object Logger {
         ) {
             lastFragment = fragment.toString()
             val activityFragmentName =
-                activity.formattedName().plus(" - ").plus(fragment.formattedName())
+                activity.name().plus(" - ").plus(fragment.formattedName())
             if (logEnabled) {
                 Log.d(WHERE_AM_I, activityFragmentName)
             }
