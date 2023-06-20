@@ -33,7 +33,7 @@ android {
 
 dependencies {
 
-    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
 
 }
 
@@ -45,7 +45,7 @@ afterEvaluate {
 
                 groupId = 'com.github.ugurbuga'
                 artifactId = 'where-am-i'
-                version = '0.0.19'
+                version = '0.0.20'
             }
         }
     }
