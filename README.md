@@ -1,5 +1,11 @@
 # Where Am I?
 
+With this library,
+- You can see which page you are on,
+- Shows which pages it went through,
+- It allows you to open the relevant screen by clicking it.
+- It distinguishes whether the screen is kotlin or java.
+
 Download
 --------
 Gradle:
@@ -32,3 +38,7 @@ class App : Application() {
     }
 }
 ```
+
+<img src="app/screenshots/activity-fragment.png" width="500">
+
+<img src="app/screenshots/kotlin-java.png" width="500">
