@@ -6,6 +6,10 @@ With this library,
 - It allows you to open the relevant screen by clicking it.
 - It distinguishes whether the screen is kotlin or java.
 
+| Activity-Fragment | Kotlin-Java |
+| --- | ----------- |
+| <img src="app/screenshots/activity-fragment.png" width="500">  | <img src="app/screenshots/kotlin-java.png" width="500">|
+
 Download
 --------
 Gradle:
@@ -38,7 +42,3 @@ class App : Application() {
     }
 }
 ```
-
-<img src="app/screenshots/activity-fragment.png" width="500">
-
-<img src="app/screenshots/kotlin-java.png" width="500">
