@@ -10,7 +10,7 @@ repositories {
 }
 
 dependencies {
-  implementation 'com.github.bumptech.glide:glide:4.15.1'
+  implementation 'com.github.ugurbuga:where-am-i:0.0.22'
 }
 ```
 
