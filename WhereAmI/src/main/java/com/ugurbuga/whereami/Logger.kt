@@ -22,18 +22,19 @@ internal object Logger {
         ) {
             val allParentFragmentName = getAllParentFragmentName(fragment.parentFragment)
 
-            val fragments = if (allParentFragmentName.isNotEmpty()) {
-                allParentFragmentName.plus(DASH_SPACE).plus(fragment.formattedName)
-            } else {
-                fragment.formattedName
-            }
+            val fragments = allParentFragmentName.plus(DASH_SPACE).plus(fragment.formattedName)
+
             Log.d(WHERE_AM_I, activity.simpleName.plus(fragments))
         }
     }
 
-    private fun getAllParentFragmentName(parentFragment: Fragment?): String {
-        return if (parentFragment != null) {
-            getAllParentFragmentName(parentFragment.parentFragment) + DASH_SPACE + parentFragment.simpleName
+    private fun getAllParentFragmentName(fragment: Fragment?): String {
+        return if (fragment != null) {
+            if (fragment.toString().startsWith(NAV_HOST_FRAGMENT)) {
+                getAllParentFragmentName(fragment.parentFragment)
+            } else {
+                getAllParentFragmentName(fragment.parentFragment) + DASH_SPACE + fragment.simpleName
+            }
         } else {
             ""
         }
@@ -48,19 +49,19 @@ internal object Logger {
 }
 
 private val Any.simpleName: String
-    get() = this.javaClass.simpleName
+    get() = javaClass.simpleName
 
 
 private val Any.formattedName: String
     get() = if (this is Activity || this is Fragment) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            if (this.javaClass.getDeclaredAnnotation(Metadata::class.java) != null) {
-                "(" + this.simpleName + ".kt:1)"
+            if (javaClass.getDeclaredAnnotation(Metadata::class.java) != null) {
+                "($simpleName.kt:1)"
             } else {
-                "(" + this.simpleName + ".java:1)"
+                "($simpleName.java:1)"
             }
         } else {
-            this.simpleName
+            simpleName
         }
     } else {
         ""
