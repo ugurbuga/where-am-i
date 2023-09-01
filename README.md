@@ -20,7 +20,7 @@ repositories {
 }
 
 dependencies {
-  implementation 'com.github.ugurbuga:where-am-i:0.0.22'
+  implementation 'com.github.ugurbuga:where-am-i:1.0.0'
 }
 ```
 
