@@ -9,14 +9,17 @@ import androidx.fragment.app.FragmentManager
 
 object WhereAmI {
     fun init(application: Application, logEnabled: Boolean) {
+        if (!logEnabled) {
+            return
+        }
 
         var fragmentCallback: FragmentManager.FragmentLifecycleCallbacks? = null
 
         val activityCallback = object : Application.ActivityLifecycleCallbacks {
 
             override fun onActivityResumed(activity: Activity) {
-                Logger.logActivity(activity, logEnabled)
-                fragmentCallback = registerFragmentLifecycleCallbacks(activity, logEnabled)
+                Logger.logActivity(activity)
+                fragmentCallback = registerFragmentLifecycleCallbacks(activity)
             }
 
             override fun onActivityPaused(activity: Activity) {
@@ -38,16 +41,13 @@ object WhereAmI {
         application.registerActivityLifecycleCallbacks(activityCallback)
     }
 
-    private fun registerFragmentLifecycleCallbacks(
-        activity: Activity,
-        logEnabled: Boolean
-    ): FragmentManager.FragmentLifecycleCallbacks? {
+    private fun registerFragmentLifecycleCallbacks(activity: Activity): FragmentManager.FragmentLifecycleCallbacks? {
         if (activity !is FragmentActivity) return null
 
         val fragmentCallback = object : FragmentManager.FragmentLifecycleCallbacks() {
             override fun onFragmentResumed(fm: FragmentManager, fragment: Fragment) {
                 super.onFragmentResumed(fm, fragment)
-                Logger.logFragment(activity, fragment, logEnabled)
+                Logger.logFragment(activity, fragment)
             }
         }
 

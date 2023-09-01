@@ -8,24 +8,34 @@ import androidx.fragment.app.Fragment
 internal object Logger {
 
     private const val WHERE_AM_I = "WhereAmI"
+    private const val DASH_SPACE = " - "
 
-    fun logActivity(activity: Activity, logEnabled: Boolean) {
-        val activityName = getFormattedName(activity.javaClass)
-        if (logEnabled) {
-            Log.d(WHERE_AM_I, activityName)
-        }
+    fun logActivity(activity: Activity) {
+        val activityName = activity.formattedName
+        Log.d(WHERE_AM_I, activityName)
     }
 
-    fun logFragment(activity: Activity, fragment: Fragment, logEnabled: Boolean) {
+    fun logFragment(activity: Activity, fragment: Fragment) {
         if (fragment.tag !in ignoreList &&
             !(fragment.toString().startsWith(NAV_HOST_FRAGMENT) ||
                     fragment.toString().startsWith(SUPPORT_MAP_FRAGMENT))
         ) {
-            val activityFragmentName =
-                activity.javaClass.simpleName.plus(" - ").plus(getFormattedName(fragment.javaClass))
-            if (logEnabled) {
-                Log.d(WHERE_AM_I, activityFragmentName)
+            val allParentFragmentName = getAllParentFragmentName(fragment.parentFragment)
+
+            val fragments = if (allParentFragmentName.isNotEmpty()) {
+                allParentFragmentName.plus(DASH_SPACE).plus(fragment.formattedName)
+            } else {
+                fragment.formattedName
             }
+            Log.d(WHERE_AM_I, activity.simpleName.plus(fragments))
+        }
+    }
+
+    private fun getAllParentFragmentName(parentFragment: Fragment?): String {
+        return if (parentFragment != null) {
+            getAllParentFragmentName(parentFragment.parentFragment) + DASH_SPACE + parentFragment.simpleName
+        } else {
+            ""
         }
     }
 
@@ -35,16 +45,23 @@ internal object Logger {
     private const val SUPPORT_LIFECYCLE_FRAGMENT_IMPL = "SupportLifecycleFragmentImpl"
 
     private val ignoreList = arrayListOf(GLIDE_MANAGER, SUPPORT_LIFECYCLE_FRAGMENT_IMPL)
+}
 
-    private fun getFormattedName(clazz: Class<Any>): String {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            if (clazz.getDeclaredAnnotation(Metadata::class.java) != null) {
-                "(" + clazz.simpleName + ".kt:1)"
+private val Any.simpleName: String
+    get() = this.javaClass.simpleName
+
+
+private val Any.formattedName: String
+    get() = if (this is Activity || this is Fragment) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            if (this.javaClass.getDeclaredAnnotation(Metadata::class.java) != null) {
+                "(" + this.simpleName + ".kt:1)"
             } else {
-                "(" + clazz.simpleName + ".java:1)"
+                "(" + this.simpleName + ".java:1)"
             }
         } else {
-            clazz.simpleName
+            this.simpleName
         }
+    } else {
+        ""
     }
-}
