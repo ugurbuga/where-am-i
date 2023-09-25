@@ -7,6 +7,6 @@ class App : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        WhereAmI.init(application = this, logEnabled = true)
+        WhereAmI.init(application = this, pushEnabled = true, logEnabled = true)
     }
 }
