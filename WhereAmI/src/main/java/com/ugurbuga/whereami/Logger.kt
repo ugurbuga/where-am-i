@@ -1,9 +1,11 @@
 package com.ugurbuga.whereami
 
 import android.app.Activity
-import android.os.Build
 import android.util.Log
 import androidx.fragment.app.Fragment
+import com.nextlua.mint.whereami.PushNotification
+import com.ugurbuga.whereami.Extensions.formattedName
+import com.ugurbuga.whereami.Extensions.simpleName
 
 internal object Logger {
 
@@ -13,6 +15,7 @@ internal object Logger {
     fun logActivity(activity: Activity) {
         val activityName = activity.formattedName
         Log.d(WHERE_AM_I, activityName)
+        PushNotification.send(activity, activity.simpleName)
     }
 
     fun logFragment(activity: Activity, fragment: Fragment) {
@@ -25,6 +28,7 @@ internal object Logger {
             val fragments = allParentFragmentName.plus(DASH_SPACE).plus(fragment.formattedName)
 
             Log.d(WHERE_AM_I, activity.simpleName.plus(fragments))
+            PushNotification.send(activity, fragment.simpleName)
         }
     }
 
@@ -47,22 +51,3 @@ internal object Logger {
 
     private val ignoreList = arrayListOf(GLIDE_MANAGER, SUPPORT_LIFECYCLE_FRAGMENT_IMPL)
 }
-
-private val Any.simpleName: String
-    get() = javaClass.simpleName
-
-
-private val Any.formattedName: String
-    get() = if (this is Activity || this is Fragment) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            if (javaClass.getDeclaredAnnotation(Metadata::class.java) != null) {
-                "($simpleName.kt:1)"
-            } else {
-                "($simpleName.java:1)"
-            }
-        } else {
-            simpleName
-        }
-    } else {
-        ""
-    }

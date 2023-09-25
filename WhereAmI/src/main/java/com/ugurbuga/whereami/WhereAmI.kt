@@ -6,12 +6,15 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
+import com.nextlua.mint.whereami.PushNotification
 
 object WhereAmI {
-    fun init(application: Application, logEnabled: Boolean) {
+
+    fun init(application: Application, pushEnabled: Boolean, logEnabled: Boolean) {
         if (!logEnabled) {
             return
         }
+        PushNotification.setPushEnabled(pushEnabled)
 
         var fragmentCallback: FragmentManager.FragmentLifecycleCallbacks? = null
 
