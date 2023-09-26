@@ -1,4 +1,4 @@
-package com.nextlua.mint.whereami
+package com.ugurbuga.whereami
 
 import android.Manifest
 import android.app.NotificationChannel
@@ -12,15 +12,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import com.ugurbuga.whereami.Const.COLOR
+import com.ugurbuga.whereami.Const.NAME
 import com.ugurbuga.whereami.Extensions.fromHtml
-import com.ugurbuga.whereami.R
 
 internal object PushNotification {
 
-    private const val WHERE_AM_I = "Where Am I?"
-    private const val COLOR = "#377e82"
-    private var pushEnabled = false
-
+    private var enabled = false
     private var list = arrayListOf<String>()
     private var count = 0
 
@@ -33,14 +31,14 @@ internal object PushNotification {
 
     private fun getFormatted(it: String): CharSequence {
         return if (count++ % 2 == 0) {
-            "<font color='$COLOR'>$it</font>"
+            "<font color='${COLOR}'>$it</font>"
         } else {
             it
         }
     }
 
     fun send(context: Context, text: String) {
-        if (!pushEnabled) {
+        if (!enabled) {
             return
         }
         val pages = addAndFormatPages(text)
@@ -48,18 +46,18 @@ internal object PushNotification {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val notificationManager =
                 context.getSystemService(AppCompatActivity.NOTIFICATION_SERVICE) as NotificationManager
-            val existingChannel = notificationManager.getNotificationChannel(WHERE_AM_I)
+            val existingChannel = notificationManager.getNotificationChannel(NAME)
             if (existingChannel == null) {
                 val channel =
-                    NotificationChannel(WHERE_AM_I, WHERE_AM_I, NotificationManager.IMPORTANCE_LOW)
-                channel.description = WHERE_AM_I
+                    NotificationChannel(NAME, NAME, NotificationManager.IMPORTANCE_LOW)
+                channel.description = NAME
 
                 notificationManager.createNotificationChannel(channel)
             }
         }
 
-        val builder = NotificationCompat.Builder(context, WHERE_AM_I)
-        builder.setContentTitle(WHERE_AM_I)
+        val builder = NotificationCompat.Builder(context, NAME)
+        builder.setContentTitle(NAME)
             .setContentText(pages)
             .setColor(Color.parseColor(COLOR))
             .setSmallIcon(R.drawable.ic_location)
@@ -84,7 +82,8 @@ internal object PushNotification {
         }
     }
 
-    fun setPushEnabled(enabled: Boolean) {
-        pushEnabled = enabled
+    fun setEnabled(enabled: Boolean) {
+        this.enabled = enabled
     }
+
 }

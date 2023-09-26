@@ -6,15 +6,14 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
-import com.nextlua.mint.whereami.PushNotification
 
 object WhereAmI {
 
-    fun init(application: Application, pushEnabled: Boolean, logEnabled: Boolean) {
-        if (!logEnabled) {
+    fun init(application: Application, waiConfig: WAIConfig) {
+        if (!waiConfig.isLogEnabled()) {
             return
         }
-        PushNotification.setPushEnabled(pushEnabled)
+        Logger.setEnabled(waiConfig)
 
         var fragmentCallback: FragmentManager.FragmentLifecycleCallbacks? = null
 
@@ -67,4 +66,5 @@ object WhereAmI {
 
         activity.supportFragmentManager.unregisterFragmentLifecycleCallbacks(fragmentCallback)
     }
+
 }
