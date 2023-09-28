@@ -14,7 +14,7 @@ internal object Logger {
     private val ignoreList = arrayListOf(GLIDE_MANAGER, SUPPORT_LIFECYCLE_FRAGMENT_IMPL)
 
     fun logActivity(activity: Activity) {
-        Console.log(activity.formattedName)
+        Logcat.log(activity.formattedName)
         PushNotification.send(activity, activity.simpleName)
         Toast.show(activity, activity.simpleName)
     }
@@ -24,15 +24,15 @@ internal object Logger {
             !(fragment.toString().startsWith(NAV_HOST_FRAGMENT) ||
                     fragment.toString().startsWith(SUPPORT_MAP_FRAGMENT))
         ) {
-            Console.log(activity, fragment)
+            Logcat.log(activity, fragment)
             PushNotification.send(activity, fragment.simpleName)
             Toast.show(activity, fragment.simpleName)
         }
     }
 
     fun setEnabled(waiConfig: WAIConfig) {
-        Console.setEnabled(waiConfig.consoleLogEnabled)
-        Console.setLogLevel(waiConfig.consoleLogLevel)
+        Logcat.setEnabled(waiConfig.consoleLogEnabled)
+        Logcat.setLogLevel(waiConfig.consoleLogLevel)
         PushNotification.setEnabled(waiConfig.pushEnabled)
         Toast.setEnabled(waiConfig.toastEnabled)
     }

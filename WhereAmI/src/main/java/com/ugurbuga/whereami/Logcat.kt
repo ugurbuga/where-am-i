@@ -9,7 +9,7 @@ import com.ugurbuga.whereami.Const.WHERE_AM_I
 import com.ugurbuga.whereami.Extensions.formattedName
 import com.ugurbuga.whereami.Extensions.simpleName
 
-internal object Console {
+internal object Logcat {
 
     private var enabled = false
     private var logLevel = WAILogLevel.BASIC

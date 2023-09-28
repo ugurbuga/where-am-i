@@ -78,7 +78,6 @@ internal object PushNotification {
             ) == PackageManager.PERMISSION_GRANTED
         ) {
             notificationManager.notify(Int.MAX_VALUE, notification)
-
         }
     }
 
